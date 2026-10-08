@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="app-version" content="{{VERSION}}">
+  <title>Deploy Canary</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+  <style>:root { --accent: {{COLOR}}; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="dot"></span> Deploy Canary</div>
+    <span class="pill" title="APP_ENV">{{ENVIRONMENT}}</span>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>{{MESSAGE}}</h1>
+      <p>This page was rendered by <strong>v<span id="pageVersion">{{VERSION}}</span></strong>.</p>
+    </section>
+
+    <div id="banner" class="banner" role="status" hidden>
+      <span id="bannerText"></span>
+      <button id="reloadBtn" type="button">Reload</button>
+    </div>
+
+    <section aria-labelledby="live-heading">
+      <h2 id="live-heading">Live instance</h2>
+      <dl class="grid">
+        <div class="card"><dt>Version</dt><dd id="vVersion">&mdash;</dd></div>
+        <div class="card"><dt>Git SHA</dt><dd id="vSha" class="mono">&mdash;</dd></div>
+        <div class="card"><dt>Host</dt><dd id="vHost" class="mono">&mdash;</dd></div>
+        <div class="card"><dt>Uptime</dt><dd id="vUptime">&mdash;</dd></div>
+        <div class="card"><dt>Started</dt><dd id="vStarted">&mdash;</dd></div>
+        <div class="card"><dt>Built</dt><dd id="vBuilt">&mdash;</dd></div>
+      </dl>
+    </section>
+
+    <section aria-labelledby="watch-heading">
+      <div class="section-head">
+        <h2 id="watch-heading">Deploy watcher</h2>
+        <div class="actions">
+          <span id="status" class="status" data-state="connecting"><span class="led"></span><span id="statusText">Connecting&hellip;</span></span>
+          <button id="pauseBtn" type="button" class="ghost">Pause</button>
+        </div>
+      </div>
+      <div class="stats">
+        <div><span class="stat-label">Latency</span><span id="statLatency" class="stat-value">&mdash;</span></div>
+        <div><span class="stat-label">Requests</span><span id="statRequests" class="stat-value">0</span></div>
+        <div><span class="stat-label">Availability</span><span id="statAvail" class="stat-value">&mdash;</span></div>
+      </div>
+      <ol id="log" class="log" aria-live="polite"></ol>
+    </section>
+
+    <section id="chaos" aria-labelledby="chaos-heading">
+      <h2 id="chaos-heading">Failure injection</h2>
+      <p class="muted">Flip this instance into a bad state and watch how your platform reacts.</p>
+      <div id="chaosModes" class="chips" role="group" aria-label="Chaos mode"></div>
+      <p id="chaosHelp" class="muted small"></p>
+    </section>
+  </main>
+
+  <footer>
+    <a href="/api/version">/api/version</a>
+    <a href="/api/hello">/api/hello</a>
+    <a href="/healthz">/healthz</a>
+    <a href="/readyz">/readyz</a>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>

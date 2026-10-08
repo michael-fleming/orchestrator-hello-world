@@ -1,0 +1,64 @@
+# Example manifest for exercising rolling updates.
+# Roll a new version with:
+#   kubectl set image deploy/deploy-canary app=deploy-canary:1.1.0
+#   kubectl set env deploy/deploy-canary APP_VERSION=1.1.0 APP_COLOR=#16a34a
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-canary
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: deploy-canary
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: deploy-canary
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: app
+          image: deploy-canary:1.0.0
+          ports:
+            - containerPort: 3000
+          env:
+            - name: APP_ENV
+              value: staging
+            - name: STARTUP_DELAY_MS
+              value: "3000"    # simulate a slow-booting app
+            - name: SHUTDOWN_DELAY_MS
+              value: "5000"    # give the load balancer time to drain us
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: 3000
+            periodSeconds: 2
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 3000
+            periodSeconds: 5
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 25m
+              memory: 32Mi
+            limits:
+              memory: 128Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: deploy-canary
+spec:
+  selector:
+    app: deploy-canary
+  ports:
+    - port: 80
+      targetPort: 3000

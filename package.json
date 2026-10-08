@@ -1,0 +1,16 @@
+{
+  "name": "deploy-canary",
+  "version": "1.0.0",
+  "description": "Small zero-dependency web app for testing deployments, rollouts, and app updates",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "private": true
+}
