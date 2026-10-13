@@ -25,6 +25,6 @@ jobs:
       sha: ${{ inputs.sha }}
       dockerfile: Dockerfile
       platforms: linux/amd64
-      hooks: pre-build
-      hooks-dir: .orchestrator/hooks
+      #hooks: pre-build
+      #hooks-dir: .orchestrator/hooks
     secrets: inherit
