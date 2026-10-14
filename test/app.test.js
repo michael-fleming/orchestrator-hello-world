@@ -69,7 +69,7 @@ test('/api/version reports build info and sets version headers', async () => {
   }
 });
 
-test('index page is rendered with version, color and escaped message', async () => {
+test('index page is rendered with version, color and headline', async () => {
   const { base, close } = await startServer();
   try {
     const res = await fetch(`${base}/`);
@@ -79,7 +79,7 @@ test('index page is rendered with version, color and escaped message', async () 
     const html = await res.text();
     assert.ok(html.includes('9.9.9'));
     assert.ok(html.includes('--accent: #ff0000'));
-    assert.ok(html.includes('Hi &lt;there&gt;'));
+    assert.ok(html.includes('Lorem ipsum dolor sit amet'));
     assert.ok(!html.includes('{{'), 'no unreplaced placeholders');
   } finally {
     await close();
@@ -246,3 +246,4 @@ test('beginShutdown makes /readyz report draining', async () => {
     await close();
   }
 });
+

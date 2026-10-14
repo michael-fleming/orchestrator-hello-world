@@ -53,7 +53,7 @@ All configuration is via environment variables.
 | `BUILD_TIME` | unset | ISO timestamp of the build |
 | `APP_ENV` | `local` | Environment label |
 | `APP_COLOR` | `#2563eb` | Accent color (hex), so versions look different |
-| `APP_MESSAGE` | `Hello, world!` | Headline text |
+| `APP_MESSAGE` | `Hello, world!` | Message returned by `/api/hello` and `/api/version` |
 | `STARTUP_DELAY_MS` | `0` | `/readyz` returns 503 for this long after boot |
 | `SHUTDOWN_DELAY_MS` | `0` | Drain time between SIGTERM and exit |
 | `ENABLE_CHAOS` | `true` | Set to `false` to disable `/api/chaos` |
@@ -132,3 +132,4 @@ k8s/deployment.yaml  example manifest
 Dockerfile
 .github/workflows/   CI: tests on Node 20/22, image build, smoke test
 ```
+
