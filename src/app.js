@@ -8,6 +8,11 @@ const { createChaos } = require('./chaos');
 
 const PUBLIC_DIR = path.resolve(__dirname, '..', 'public');
 
+// The stock headline shipped by src/config.js, and what we show instead of it.
+// Setting APP_MESSAGE to anything else still wins.
+const STOCK_MESSAGE = 'Hello, world!';
+const DEFAULT_MESSAGE = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+
 const MIME = {
   '.html': 'text/html; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
@@ -64,6 +69,7 @@ function createApp(config) {
   const startedAt = new Date();
   const chaos = createChaos();
   const state = { ready: config.startupDelayMs <= 0, shuttingDown: false };
+  const message = config.message === STOCK_MESSAGE ? DEFAULT_MESSAGE : config.message;
 
   if (!state.ready) {
     setTimeout(() => {
@@ -79,7 +85,7 @@ function createApp(config) {
       buildTime: config.buildTime,
       environment: config.environment,
       color: config.color,
-      message: config.message,
+      message,
       hostname: os.hostname(),
       pid: process.pid,
       node: process.version,
@@ -101,7 +107,7 @@ function createApp(config) {
     return html
       .replaceAll('{{VERSION}}', escapeHtml(config.version))
       .replaceAll('{{COLOR}}', config.color)
-      .replaceAll('{{MESSAGE}}', escapeHtml(config.message))
+      .replaceAll('{{MESSAGE}}', escapeHtml(message))
       .replaceAll('{{ENVIRONMENT}}', escapeHtml(config.environment));
   }
 
@@ -209,7 +215,7 @@ function createApp(config) {
       if (urlPath === '/api/version') return sendJson(res, 200, versionInfo());
       if (urlPath === '/api/hello') {
         return sendJson(res, 200, {
-          message: config.message,
+          message,
           version: config.version,
           time: new Date().toISOString(),
         });
@@ -259,3 +265,4 @@ function createApp(config) {
 }
 
 module.exports = { createApp };
+
