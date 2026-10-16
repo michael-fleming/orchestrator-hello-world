@@ -1,4 +1,4 @@
-# Deploy Canary TEST
+# Deploy Canary
 
 A small web app for testing deployments, rollouts, and app updates. It has no
 dependencies, boots instantly, and makes it obvious *which version is serving
@@ -53,7 +53,7 @@ All configuration is via environment variables.
 | `BUILD_TIME` | unset | ISO timestamp of the build |
 | `APP_ENV` | `local` | Environment label |
 | `APP_COLOR` | `#2563eb` | Accent color (hex), so versions look different |
-| `APP_MESSAGE` | `Hello, world!` | Headline text |
+| `APP_MESSAGE` | `Lorem ipsum dolor sit amet, consectetur adipiscing elit.` | Headline text |
 | `STARTUP_DELAY_MS` | `0` | `/readyz` returns 503 for this long after boot |
 | `SHUTDOWN_DELAY_MS` | `0` | Drain time between SIGTERM and exit |
 | `ENABLE_CHAOS` | `true` | Set to `false` to disable `/api/chaos` |
@@ -65,7 +65,7 @@ Run "v1" and "v2" side by side, or swap one for the other:
 
 ```bash
 PORT=3000 APP_VERSION=1.0.0 APP_COLOR='#2563eb' npm start
-PORT=3001 APP_VERSION=1.1.0 APP_COLOR='#16a34a' APP_MESSAGE='Hello, v1.1!' npm start
+PORT=3001 APP_VERSION=1.1.0 APP_COLOR='#16a34a' APP_MESSAGE='Lorem ipsum, v1.1!' npm start
 ```
 
 With the dashboard open on `:3000`, stop that server and start v1.1.0 on the
@@ -132,3 +132,4 @@ k8s/deployment.yaml  example manifest
 Dockerfile
 .github/workflows/   CI: tests on Node 20/22, image build, smoke test
 ```
+
