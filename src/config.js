@@ -25,7 +25,7 @@ function loadConfig(env = process.env) {
     buildTime: env.BUILD_TIME || null,
     environment: env.APP_ENV || 'local',
     color,
-    message: env.APP_MESSAGE || 'Hello, world!',
+    message: env.APP_MESSAGE || 'Lorem ipsum dolor sit amet',
     startupDelayMs: toInt(env.STARTUP_DELAY_MS, 0),
     shutdownDelayMs: toInt(env.SHUTDOWN_DELAY_MS, 0),
     chaosEnabled: env.ENABLE_CHAOS !== 'false',
@@ -34,3 +34,4 @@ function loadConfig(env = process.env) {
 }
 
 module.exports = { loadConfig };
+
